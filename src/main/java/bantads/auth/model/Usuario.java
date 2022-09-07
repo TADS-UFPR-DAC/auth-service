@@ -6,7 +6,10 @@ import javax.persistence.*;
 @Entity
 @Table(name = "tb_usuarios")
 public class Usuario implements Serializable {
-	private static final Long serialVersionUID = 1L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue
 	@Column(name = "id_usu")

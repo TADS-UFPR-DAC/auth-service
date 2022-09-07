@@ -3,7 +3,8 @@ package bantads.auth.model;
 import java.io.Serializable;
 
 public class UsuarioDTO implements Serializable {
-	private int id;
+
+	private long id;
 	private String nome;
 	private String login;
 	private String senha;
@@ -13,7 +14,7 @@ public class UsuarioDTO implements Serializable {
 		super();
 	}
 
-	public UsuarioDTO(int id, String nome, String login, String senha, String perfil) {
+	public UsuarioDTO(long id, String nome, String login, String senha, String perfil) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -22,11 +23,11 @@ public class UsuarioDTO implements Serializable {
 		this.perfil = perfil;
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

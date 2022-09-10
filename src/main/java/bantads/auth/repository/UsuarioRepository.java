@@ -16,4 +16,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 	// consulta por parâmetros nomeados
 	@Query("from Usuario where login = :login and senha = :senha")
 	Optional<Usuario> findByLoginAndSenha(@Param("login") String login, @Param("senha") String senha);
+
+	// consulta por id de cliente
+	@Query("from Usuario where id_cliente = :idCliente")
+	Optional<Usuario> findByClienteId(Long idCliente);
 }

@@ -92,7 +92,7 @@ public class AuthREST {
 	@GetMapping("/usuarios/{idCliente}")
 	public ResponseEntity<UsuarioDTO> listaUsuario(@PathVariable Long idCliente){
 		
-		Optional<Usuario> user = repo.findById(idCliente);
+		Optional<Usuario> user = repo.findByClienteId(idCliente);
 		if(user.isEmpty()) {
 			rabbitTemplate.convertAndSend(MENSAGEM_EXCHANGE, CHAVE_MENSAGEM, errorFormat("acharUsuario"));
 			throw new AuthException(HttpStatus.NOT_FOUND, "Usuário não encontrado!");
@@ -105,7 +105,7 @@ public class AuthREST {
 	@PutMapping("/usuarios/{idCliente}")
 	public ResponseEntity<UsuarioDTO> atualizar(@PathVariable Long idCliente, @RequestBody UsuarioDTO usuario){
 		
-		Optional<Usuario> user = repo.findById(idCliente);
+		Optional<Usuario> user = repo.findByClienteId(idCliente);
 		if(user.isEmpty()) {
 			rabbitTemplate.convertAndSend(MENSAGEM_EXCHANGE, CHAVE_MENSAGEM, errorFormat("atualizarUsuario"));
 			throw new AuthException(HttpStatus.NOT_FOUND, "Usuário não encontrado!");
@@ -121,7 +121,7 @@ public class AuthREST {
 	@DeleteMapping("/usuarios/{idCliente}")
 	public ResponseEntity deleteUsuario(@PathVariable Long idCliente){
 		
-		Optional<Usuario> usuario = repo.findById(idCliente);
+		Optional<Usuario> usuario = repo.findByClienteId(idCliente);
 		if(usuario.isEmpty()) {
 			rabbitTemplate.convertAndSend(MENSAGEM_EXCHANGE, CHAVE_MENSAGEM, errorFormat("deletarUsuario"));
 			throw new AuthException(HttpStatus.NOT_FOUND, "Usuário não encontrado!");

@@ -89,10 +89,10 @@ public class AuthREST {
 		}
 	}
 	
-	@GetMapping("/usuarios/{idCliente}")
-	public ResponseEntity<UsuarioDTO> listaUsuario(@PathVariable Long idCliente){
+	@GetMapping("/usuarios/{idPessoa}")
+	public ResponseEntity<UsuarioDTO> listaUsuario(@PathVariable Long idPessoa){
 		
-		Optional<Usuario> user = repo.findByClienteId(idCliente);
+		Optional<Usuario> user = repo.findByIdPessoa(idPessoa);
 		if(user.isEmpty()) {
 			rabbitTemplate.convertAndSend(MENSAGEM_EXCHANGE, CHAVE_MENSAGEM, errorFormat("acharUsuario"));
 			throw new AuthException(HttpStatus.NOT_FOUND, "Usuário não encontrado!");
@@ -102,26 +102,26 @@ public class AuthREST {
 		}
 	}
 	
-	@PutMapping("/usuarios/{idCliente}")
-	public ResponseEntity<UsuarioDTO> atualizar(@PathVariable Long idCliente, @RequestBody UsuarioDTO usuario){
+	@PutMapping("/usuarios/{idPessoa}")
+	public ResponseEntity<UsuarioDTO> atualizar(@PathVariable Long idPessoa, @RequestBody UsuarioDTO usuario){
 		
-		Optional<Usuario> user = repo.findByClienteId(idCliente);
+		Optional<Usuario> user = repo.findByIdPessoa(idPessoa);
 		if(user.isEmpty()) {
 			rabbitTemplate.convertAndSend(MENSAGEM_EXCHANGE, CHAVE_MENSAGEM, errorFormat("atualizarUsuario"));
 			throw new AuthException(HttpStatus.NOT_FOUND, "Usuário não encontrado!");
 		}else {
 			rabbitTemplate.convertAndSend(MENSAGEM_EXCHANGE, CHAVE_MENSAGEM, successFormat("atualizarUsuario"));
-			usuario.setId(idCliente);
+			usuario.setId(idPessoa);
 			repo.save(mapper.map(usuario, Usuario.class));
-			user = repo.findById(idCliente);
+			user = repo.findByIdPessoa(idPessoa);
 			return ResponseEntity.status(HttpStatus.OK).body(mapper.map(user, UsuarioDTO.class));
 		}
 	}
 	
-	@DeleteMapping("/usuarios/{idCliente}")
-	public ResponseEntity deleteUsuario(@PathVariable Long idCliente){
+	@DeleteMapping("/usuarios/{idPessoa}")
+	public ResponseEntity deleteUsuario(@PathVariable Long idPessoa){
 		
-		Optional<Usuario> usuario = repo.findByClienteId(idCliente);
+		Optional<Usuario> usuario = repo.findByIdPessoa(idPessoa);
 		if(usuario.isEmpty()) {
 			rabbitTemplate.convertAndSend(MENSAGEM_EXCHANGE, CHAVE_MENSAGEM, errorFormat("deletarUsuario"));
 			throw new AuthException(HttpStatus.NOT_FOUND, "Usuário não encontrado!");

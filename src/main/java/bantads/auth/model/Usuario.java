@@ -14,8 +14,8 @@ public class Usuario implements Serializable {
 	@GeneratedValue
 	@Column(name = "id_usu")
 	private Long id;
-	@Column(name = "id_cliente")
-	private Long clienteId;
+	@Column(name = "id_pessoa")
+	private Long idPessoa;
 	@Column(name = "nome_usu")
 	private String nome;
 	@Column(name = "login_usu")
@@ -29,10 +29,10 @@ public class Usuario implements Serializable {
 		super();
 	}
 
-	public Usuario(Long id, Long clienteId, String nome, String login, String senha, String perfil) {
+	public Usuario(Long id, Long idPessoa, String nome, String login, String senha, String perfil) {
 		super();
 		this.id = id;
-		this.clienteId = clienteId;
+		this.idPessoa = idPessoa;
 		this.nome = nome;
 		this.login = login;
 		this.senha = senha;
@@ -47,12 +47,12 @@ public class Usuario implements Serializable {
 		this.id = id;
 	}
 	
-	public Long getClienteId() {
-		return clienteId;
+	public Long getIdPessoa() {
+		return idPessoa;
 	}
 
-	public void setClienteId(Long clienteId) {
-		this.clienteId = clienteId;
+	public void setIdPessoa(Long clienteId) {
+		this.idPessoa = idPessoa;
 	}
 
 	public String getNome() {

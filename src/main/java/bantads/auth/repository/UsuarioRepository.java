@@ -20,4 +20,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 	// consulta por id de cliente
 	@Query("from Usuario where id_cliente = :idCliente")
 	Optional<Usuario> findByClienteId(Long idCliente);
+
+	Optional<Usuario> findByIdPessoa(Long idPessoa);
 }

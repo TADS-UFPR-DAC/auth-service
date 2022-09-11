@@ -3,6 +3,11 @@ package bantads.auth.rest;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.rabbit.annotation.Exchange;
+import org.springframework.amqp.rabbit.annotation.Queue;
+import org.springframework.amqp.rabbit.annotation.QueueBinding;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,8 +31,7 @@ import bantads.auth.model.UsuarioDTO;
 import bantads.auth.repository.UsuarioRepository;
 import bantads.auth.config.RabbitMQConfig.*;
 
-import static bantads.auth.config.RabbitMQConfig.CHAVE_MENSAGEM;
-import static bantads.auth.config.RabbitMQConfig.MENSAGEM_EXCHANGE;
+import static bantads.auth.config.RabbitMQConfig.*;
 
 
 @CrossOrigin
@@ -144,6 +148,13 @@ public class AuthREST {
 				"\"path\":\""+endpoint+"\"," +
 				"\"result\":\"error\"" +
 				"}";
+	}
+
+	@RabbitListener(bindings = @QueueBinding(value = @Queue(FILA_DELETAR_USUARIO),
+			exchange = @Exchange(name = AUTH_EXCHANGE),
+			key = CHAVE_DELETAR_USUARIO))
+	public void deletarConta(final Message message, final Usuario usuario) {
+		repo.delete(usuario);
 	}
 
 }

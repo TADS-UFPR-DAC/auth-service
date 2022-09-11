@@ -51,7 +51,7 @@ public class Usuario implements Serializable {
 		return idPessoa;
 	}
 
-	public void setIdPessoa(Long clienteId) {
+	public void setIdPessoa(Long idPessoa) {
 		this.idPessoa = idPessoa;
 	}
 
